@@ -1,24 +1,22 @@
 const router = require("express").Router();
 const Activity = require("../models/activities.js");
-var path = require("path");
-const dirname = "../public"
 
-// router.get("/exercise", (req, res) => {
-//     res.status(200).sendFile(dirname + "/exercise.html");
-// });
+var date = new Date();
+var newdate = new Date(date);
+newdate.setDate(newdate.getDate() - 7);
 
-// router.get("/", (req, res) => {
-//     console.log("path" + __dirname);
-//     res.status(200).sendFile("index.html");
-// });
+router.post('/api/workouts', function(req, res){
+  console.log("what is in my body?", req.body);
+  Activity.create(req.body)
+  .then(dbActivity => res.json(dbActivity))
+  .catch(err => {
+    res.status(400).json(err);
+  });
+})
 
-
-// router.get("/stats", (req, res) => {
-//     res.status(200).sendFile("stats.html");
-// });
-
-router.post("/api/workouts", ({ body }, res) => {
-    Activity.create(body)
+router.put("/api/workouts/:id", (req, res) => {
+  console.log("Adding stuff: ", req.body);
+    Activity.updateOne({_id:req.params.id}, {$push: {exercises:req.body}})
       .then(dbActivity => {
         res.json(dbActivity);
       })
@@ -26,26 +24,39 @@ router.post("/api/workouts", ({ body }, res) => {
         res.status(400).json(err);
       });
   });
-  
-  router.post("/api/workouts/bulk", ({ body }, res) => {
-    Activity.insertMany(body)
-      .then(dbActivity => {
-        res.json(dbActivity);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-      });
-  });
-  
+
   router.get("/api/workouts", (req, res) => {
     Activity.find({})
-      .sort({ date: -1 })
+    .sort({ date: 1 })
+    // .aggregate([{$group : {_id : "$exercises.duration", totalDuration : {$sum : 1}}}])
       .then(dbActivity => {
+        console.log("dbactivity", dbActivity);
         res.json(dbActivity);
       })
       .catch(err => {
         res.status(400).json(err);
       });
   });
-  
+
+  router.get("/api/workouts/range", (req, res) => {
+    console.log("here", newdate);
+    console.table()
+    Activity.find({
+      "day": 
+      {
+          $gte: newdate
+      }
+  })
+      .then(dbActivity => {
+        console.log("Data for charts: ", dbActivity)
+        res.json(dbActivity);
+      })
+      .catch(err => {
+        res.status(400).json(err);
+      });
+  });
+
   module.exports = router;
+
+  // {day: {$gte: req.start, $lte: req.end}}
+  // {$range: {$currentDate, {$currentDate - 5}}}

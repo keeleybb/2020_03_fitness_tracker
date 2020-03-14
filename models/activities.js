@@ -3,79 +3,87 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const activitySchema = new Schema({
-    day: {
-        type: Date,
-        default: Date.now
-    },
-    exercises: [
-      {
-        type: String,
-        name: String,
-        duration: Number,
-        weight: Number,
-        reps: Number,
-        sets: Number
+  day: {
+    type: Date,
+    default: Date.now
+  },
+  exercises: [
+    {
+      type: {
+        type: String
+      },
+      name: {
+        type: String
+      },
+      duration: {
+        type: Number
+      },
+      weight: {
+        type: Number
+      },
+      reps: {
+        type: Number
+      },
+      sets: {
+        type: Number
+      },
+
+      distance: {
+        type: Number
       }
-    ]
+    }
+  ]
 });
-//   type: {
-//     type:String,
-//     required: "Pick a route"
-//   },
-//   sets: {
-//     type: Number,
-//   },
-//   reps: {
-//     type: "Number",
-//   },
-//     duration: {
-//     type: Number,
-//     },
-//     miles: {
-//     type: Number,
-//     },
-//     duration: {
-//     type: Number,
-//     }
-// ]
 
-
-// const cardioSchema = new Schema({
-//     name: {
-//         type: String,
-//         trim: true,
-//         required: "Enter a name for your workout"
-//       },
-//       miles: {
-//         type: Number,
-//         required: "Enter number of miles"
-//       },
-//       duration: {
-//         type: Number,
-//         required: "Duration in minutes"
-//       }
-//   });
-
-//   const activitySchema = new Schema({
-//     name: {
-//       type: String,
-//       trim: true,
-//       required: "Enter a name for your workout"
-//     },
-//     sets: {
-//       type: Number,
-//       required: "Enter number of sets"
-//     },
-//     reps: {
-//       type: Number,
-//       required: "Enter number of reps"
-//     },
-//     duration: {
-//       type: Number,
-//       required: "Duration in minutes"
-//     }
-//   });
+// activitySchema.virtual("totalDuration").get(function() {
+//   console.log("anyone: ", this.exercise.duration.reduce());
+//   return this.exercises;
+// });
 
 const Activity = mongoose.model("Activity", activitySchema);
 
 module.exports = Activity;
+
+// const activitySchema = new Schema({
+//   day: {
+//     type: Date,
+//     default: Date.now
+//   },
+//   exercises: [
+//     {
+//       type: {
+//         type: String
+//       }
+//     },
+//     {
+//       name: {
+//         type: String
+//       }
+//     },
+//     {
+//       duration: {
+//         type: Number
+//       }
+//     },
+//     {
+//       weight: {
+//         type: Number
+//       }
+//     },
+//     {
+//       reps: {
+//         type: Number
+//       }
+//     },
+//     {
+//       sets: {
+//         type: Number
+//       }
+//     },
+//     {
+//       distance: {
+//         type: Number
+//       }
+//     }
+//   ]
+// });

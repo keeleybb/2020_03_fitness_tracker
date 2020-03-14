@@ -2,6 +2,8 @@
 
 fetch("/api/workouts/range")
   .then(response => {
+    // var read = (response.stringify());
+    // console.log("dash ", read);
     return response.json();
   })
   .then(data => {

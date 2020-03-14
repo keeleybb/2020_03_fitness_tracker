@@ -10,7 +10,8 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/budget", {
+//Connecting/Creating my Db
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useNewUrlParser: true,
   useFindAndModify: false
 });
@@ -27,11 +28,9 @@ app.get("/stats", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  console.log("path" + __dirname);
   res.status(200).sendFile("index.html");
 });
 
 app.listen(PORT, () => {
-  console.log("dir", __dirname);
   console.log(`App running on port ${PORT}!`);
 });
