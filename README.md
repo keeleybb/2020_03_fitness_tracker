@@ -1,7 +1,7 @@
 # Fitness Tracker App
 Keep track of your workouts with this nifty web app. This app allows you to add workouts and view your week of workouts in a dashboard. 
 
-Checkout the [deployed app] (https://polar-peak-79466.herokuapp.com/)
+Checkout the [deployed app](https://polar-peak-79466.herokuapp.com/)
 
 ## Using
 * MongoDB
